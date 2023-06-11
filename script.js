@@ -28,6 +28,7 @@ class Todo {
 const addTodoButton = document.getElementById("addTodoButton");
 const todoList = document.getElementById("todoList");
 const downloadButton = document.getElementById("downloadButton");
+const uploadButton = document.getElementById('uploadButton');
 let todoIndex = 1;
 let todos = [];
 

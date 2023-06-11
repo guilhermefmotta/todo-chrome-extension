@@ -1,11 +1,34 @@
 {
-    "name": "TODO list",
-    "version": "1.0.0",
-    "description": "A simple todo list",
-    "manifest_version": 3,
-    "author": "Guilherme Motta",
-    "action":{
-        "default_popup": "index.html",
-        "default_title": "Latest Covid Report"
+  "manifest_version": 3,
+  "name": "Your Extension",
+  "version": "1.0",
+  "description": "Description of your extension",
+  "icons": {
+    "16": "icon16.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "icon16.png"
     }
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "style.css", "https://cdn.tailwindcss.com/your-tailwind-css-file.css"],
+      "matches": ["*://*/*"]
+    }
+  ]
 }
