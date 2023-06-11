@@ -1,11 +1,52 @@
-  .toggle-textarea {
-    height: 0;
-    overflow: hidden;
-    transition: height 0.3s ease;
-  }
+body {
+  width: 600px;
+  height: 400px;
+}
 
-  .toggle-textarea.visible {
-    height: auto;
-    padding: 8px; /* Add padding to adjust spacing */
-    transition: height 0.3s ease;
-  }
+
+.toggle-textarea {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+.toggle-textarea.visible {
+  height: auto;
+  padding: 8px; /* Add padding to adjust spacing */
+  transition: height 0.3s ease;
+}
+
+#addTodoButton {
+  background-image: url("plus-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#downloadButton {
+  background-image: url("download-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#uploadButton {
+  background-image: url("file-arrow-up-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#arrowButton {
+  background-image: url("arrow-down-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+#removeButton {
+  background-image: url("xmark-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+width: 15px;
+  height: 15px;
+}
+
