@@ -1,9 +1,9 @@
 {
-    "name": "Covid-19 Stats UK",
+    "name": "TODO list",
     "version": "1.0.0",
-    "description": "latest covid data of UK",
+    "description": "A simple todo list",
     "manifest_version": 3,
-    "author": "Sampurna Chapagain",
+    "author": "Guilherme Motta",
     "action":{
         "default_popup": "index.html",
         "default_title": "Latest Covid Report"
