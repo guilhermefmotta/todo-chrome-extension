@@ -1,0 +1,11 @@
+  .toggle-textarea {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+
+  .toggle-textarea.visible {
+    height: auto;
+    padding: 8px; /* Add padding to adjust spacing */
+    transition: height 0.3s ease;
+  }
