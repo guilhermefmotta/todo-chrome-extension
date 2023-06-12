@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Your Extension",
+  "name": "Todo List",
   "version": "1.0",
-  "description": "Description of your extension",
+  "description": "A Simple and effective todo list",
   "icons": {
     "16": "icon16.png"
   },
@@ -13,17 +13,11 @@
     }
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "host_permissions": [
     "*://*/*"
-  ],
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["script.js"],
-      "css": ["style.css"]
-    }
   ],
   "web_accessible_resources": [
     {
