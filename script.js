@@ -1,16 +1,30 @@
 (function () {
   class Todo {
-    constructor(name, date) {
+    constructor(name, date, description) {
       this.name = name;
       this.date = date;
       this.checked = false;
       this.createdDate = new Date().toLocaleString("en-US");
       this.checkedDate = null;
+      this.description = description;
     }
 
-    
+    toggleChecked() {
+      this.checked = !this.checked;
+      if (this.checked) {
+        this.checkedDate = new Date().toLocaleString("en-US");
+      } else {
+        this.checkedDate = null;
+      }
+    }
 
-    
+    isDueSoon() {
+      const currentDate = new Date();
+      const taskDate = new Date(this.date);
+      const timeDiff = taskDate.getTime() - currentDate.getTime();
+      const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+      return hoursDiff <= 3 && hoursDiff > -3;
+    }
   }
 
   const addTodoButton = document.getElementById("addTodoButton");
@@ -19,23 +33,6 @@
   const uploadButton = document.getElementById("uploadButton");
   let todoIndex = 1;
   let todos = [];
-
-  function toggleChecked(todo) {
-    todo.checked = !todo.checked;
-    if (todo.checked) {
-      todo.checkedDate = new Date().toLocaleString("en-US");
-    } else {
-      todo.checkedDate = null;
-    }
-  }
-
-  function isDueSoon(todo) {
-      const currentDate = new Date();
-      const taskDate = new Date(todo.date);
-      const timeDiff = taskDate.getTime() - currentDate.getTime();
-      const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
-      return hoursDiff <= 3 && hoursDiff > -3;
-    }
 
   function createTodoElement(todo) {
     const li = document.createElement("li");
@@ -91,6 +88,11 @@
       updateLocalStorage();
     });
 
+    toggleTextarea.addEventListener("change", () => {
+      todo.description = toggleTextarea.value;
+      updateLocalStorage();
+    });
+
     todoName.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -101,7 +103,7 @@
     todoDate.addEventListener("change", () => {
       todo.date = todoDate.value;
       updateLocalStorage();
-      if (isDueSoon(todo)) {
+      if (todo.isDueSoon()) {
         todoName.classList.add("bg-red");
       } else {
         todoName.classList.remove("bg-red");
@@ -109,7 +111,7 @@
     });
 
     checkbox.addEventListener("change", () => {
-      toggleChecked(todo);
+      todo.toggleChecked();
       if (checkbox.checked) {
         todoName.classList.add("line-through");
         toggleDate.textContent = `Finished ${todo.checkedDate}, Created ${todo.createdDate}`;
@@ -117,6 +119,7 @@
         todoName.classList.remove("line-through");
         toggleDate.textContent = `Created ${todo.createdDate}`;
       }
+      todo.checked = checkbox.checked;
       updateLocalStorage();
     });
 
@@ -131,7 +134,7 @@
   }
 
   function addTodo() {
-    const todo = new Todo(`Task ${todoIndex}`, "");
+    const todo = new Todo(`Task ${todoIndex}`, "", "");
     todos.push(todo);
 
     const li = createTodoElement(todo);
@@ -150,14 +153,14 @@
 
   function updateLocalStorage() {
     chrome.storage.sync.set({ todos: todos }, () => {
-      console.log("Data stored");
+      console.error("Data stored", todos);
     });
   }
 
   function loadTodosFromStorage() {
     chrome.storage.sync.get(["todos"], (result) => {
       const savedTodos = result.todos;
-      if (savedTodos) {
+      if (!!savedTodos) {
         todos = savedTodos;
         todos.forEach((todo) => {
           const li = createTodoElement(todo);
@@ -166,6 +169,7 @@
           const checkbox = li.querySelector('input[type="checkbox"]');
           const todoDate = li.querySelector(".todo-date");
           const toggleDate = li.querySelector(".toggle-date");
+          const toggleTextarea = li.querySelector(".toggle-textarea");
 
           if (todo.checked) {
             checkbox.checked = true;
@@ -174,6 +178,7 @@
           }
 
           todoDate.value = todo.date;
+          toggleTextarea.value = todo.description;
         });
 
         checkDownloadButtonVisibility();
