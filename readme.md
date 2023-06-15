@@ -14,6 +14,8 @@
 
 7. These features provide users with a simple and effective Todo List extension, allowing them to organize and manage their tasks conveniently within the Chrome browser.
 
+![todo](./todo.png "Todo")
+
 Manifest.json
 - manifest_version: This property specifies the version of the manifest file format. In this case, it's set to 3, indicating that the extension is using Manifest v3 format.
 - name: The name of your Chrome extension. In this example, it's set to "Todo List".
