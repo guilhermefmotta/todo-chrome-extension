@@ -97,7 +97,6 @@
 
       todoDate.addEventListener("change", () => {
         todo.date = todoDate.value;
-        console.log('change date',todo.date);
         if (this.isDueSoon(todoDate)) {
           todoName.classList.add("text-red-600");
         } else {
@@ -113,7 +112,7 @@
         } else {
           todo.checkedDate = null;
         }
-        
+
         if (todo.checked) {
           todoName.classList.add("line-through");
           toggleDate.textContent = `Finished ${todo.checkedDate}, Created ${todo.createdDate}`;
@@ -135,12 +134,11 @@
     }
 
     isDueSoon(todoDate) {
+      console.log(todoDate);
       const currentDate = new Date();
       const taskDate = new Date(todoDate.value);
       const timeDiff = Math.abs(taskDate.getTime() - currentDate.getTime());
       const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
-      console.log('hoursDiff', hoursDiff <= 3 && hoursDiff >= 0);
-      console.log(hoursDiff)
       return hoursDiff === 3 || hoursDiff === 0;
     }
 
@@ -164,9 +162,7 @@
     }
 
     updateLocalStorage() {
-      console.log('update todos', this.todos);
-      chrome.storage.sync.set({ todos: this.todos }, () => {
-      });
+      chrome.storage.sync.set({ todos: this.todos }, () => {});
     }
 
     loadTodosFromStorage() {
@@ -184,15 +180,20 @@
             const toggleDate = li.querySelector(".toggle-date");
             const toggleTextarea = li.querySelector(".toggle-textarea");
 
-
             if (todo.checked) {
               checkbox.checked = todo.checked;
               todoName.classList.add("line-through");
               toggleDate.textContent = `Finished ${todo.checkedDate}, Created ${todo.createdDate}`;
             }
 
-            todoDate.value = todo.date;
             toggleTextarea.value = todo.description;
+            todoDate.value = todo.date;
+
+            if (this.isDueSoon(todoDate)) {
+              todoName.classList.add("text-red-600");
+            } else {
+              todoName.classList.remove("text-red-600");
+            }
           });
 
           this.checkDownloadButtonVisibility();
