@@ -1,4 +1,3 @@
-todo-chrome-extension
 **TODO-CHROME-EXTENSION**
 
 1. Create and manage Todo items: The extension allows users to create, edit, and delete Todo items with a name, due date, and description.
